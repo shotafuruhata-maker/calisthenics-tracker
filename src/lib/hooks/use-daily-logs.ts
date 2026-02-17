@@ -3,6 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createClient } from '@/lib/supabase/client'
 import { getToday, getWeekStart, getWeekEnd } from '@/lib/utils/date'
+import { format, subDays, parseISO } from 'date-fns'
 
 export function useDailyLogs(date?: string) {
   const supabase = createClient()
@@ -89,6 +90,8 @@ export function useLogReps() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['daily-logs'] })
       queryClient.invalidateQueries({ queryKey: ['weekly-logs'] })
+      queryClient.invalidateQueries({ queryKey: ['weekly-goals'] })
+      queryClient.invalidateQueries({ queryKey: ['streak'] })
     },
   })
 }
@@ -108,6 +111,47 @@ export function useDeleteLog() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['daily-logs'] })
       queryClient.invalidateQueries({ queryKey: ['weekly-logs'] })
+      queryClient.invalidateQueries({ queryKey: ['weekly-goals'] })
+      queryClient.invalidateQueries({ queryKey: ['streak'] })
+    },
+  })
+}
+
+export function useStreak() {
+  const supabase = createClient()
+
+  return useQuery({
+    queryKey: ['streak'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error('Not authenticated')
+
+      const today = new Date()
+      const thirtyDaysAgo = format(subDays(today, 30), 'yyyy-MM-dd')
+
+      const { data, error } = await supabase
+        .from('daily_logs')
+        .select('log_date')
+        .eq('user_id', user.id)
+        .gte('log_date', thirtyDaysAgo)
+        .order('log_date', { ascending: false })
+      if (error) throw error
+
+      const uniqueDays = new Set(data.map((d) => d.log_date))
+      let streak = 0
+      let checkDate = today
+
+      for (let i = 0; i < 31; i++) {
+        const dateStr = format(checkDate, 'yyyy-MM-dd')
+        if (uniqueDays.has(dateStr)) {
+          streak++
+        } else if (i > 0) {
+          break
+        }
+        checkDate = subDays(checkDate, 1)
+      }
+
+      return streak
     },
   })
 }
