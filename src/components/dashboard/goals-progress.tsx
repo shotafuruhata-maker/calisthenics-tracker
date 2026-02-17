@@ -28,9 +28,9 @@ interface GoalsProgressProps {
 }
 
 function getProgressColor(pct: number) {
-  if (pct >= 75) return 'bg-emerald-500'
-  if (pct >= 25) return 'bg-amber-500'
-  return 'bg-gray-400'
+  if (pct >= 75) return '[&>[data-slot=progress-indicator]]:bg-emerald-500'
+  if (pct >= 25) return '[&>[data-slot=progress-indicator]]:bg-amber-500'
+  return '[&>[data-slot=progress-indicator]]:bg-muted-foreground'
 }
 
 export function GoalsProgress({ goals, weeklyLogs, overallProgress }: GoalsProgressProps) {
@@ -94,7 +94,7 @@ export function GoalsProgress({ goals, weeklyLogs, overallProgress }: GoalsProgr
                   y="50%"
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  className="fill-foreground text-xl font-bold"
+                  style={{ fontSize: '1.25rem', fontWeight: 700, fill: 'hsl(var(--foreground))' }}
                 >
                   {overallProgress}%
                 </text>
@@ -116,7 +116,7 @@ export function GoalsProgress({ goals, weeklyLogs, overallProgress }: GoalsProgr
                       {pct >= 100 && <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />}
                     </span>
                   </div>
-                  <Progress value={pct} className={`h-2 [&>[data-slot=progress-indicator]]:${getProgressColor(pct)}`} />
+                  <Progress value={pct} className={`h-2 ${getProgressColor(pct)}`} />
                 </div>
               )
             })}

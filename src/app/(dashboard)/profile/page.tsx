@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { LogOut, Save, Camera, Lock, Sun, Moon, Monitor } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -32,6 +33,7 @@ export default function ProfilePage() {
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [changingPassword, setChangingPassword] = useState(false)
+  const [signOutOpen, setSignOutOpen] = useState(false)
 
   useEffect(() => {
     if (profile) {
@@ -137,7 +139,7 @@ export default function ProfilePage() {
     : username?.[0]?.toUpperCase() || '?'
 
   return (
-    <div className="max-w-xl mx-auto space-y-6">
+    <div className="max-w-xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <h1 className="text-2xl font-bold text-foreground">Settings</h1>
 
       <Tabs defaultValue="profile">
@@ -260,7 +262,7 @@ export default function ProfilePage() {
 
           <Card>
             <CardContent className="py-4">
-              <Button variant="destructive" onClick={handleLogout} className="w-full">
+              <Button variant="destructive" onClick={() => setSignOutOpen(true)} className="w-full">
                 <LogOut className="h-4 w-4 mr-2" />
                 Sign Out
               </Button>
@@ -304,6 +306,19 @@ export default function ProfilePage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      <Dialog open={signOutOpen} onOpenChange={setSignOutOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Sign out?</DialogTitle>
+            <DialogDescription>Are you sure you want to sign out of your account?</DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={() => setSignOutOpen(false)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleLogout}>Sign Out</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

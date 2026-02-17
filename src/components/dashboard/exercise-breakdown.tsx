@@ -103,7 +103,7 @@ export function ExerciseBreakdown({ todayLogs, weeklyLogs }: ExerciseBreakdownPr
                 y="48%"
                 textAnchor="middle"
                 dominantBaseline="middle"
-                className="fill-foreground text-2xl font-bold"
+                style={{ fontSize: '1.5rem', fontWeight: 700, fill: 'hsl(var(--foreground))' }}
               >
                 {totalReps}
               </text>
@@ -112,7 +112,7 @@ export function ExerciseBreakdown({ todayLogs, weeklyLogs }: ExerciseBreakdownPr
                 y="60%"
                 textAnchor="middle"
                 dominantBaseline="middle"
-                className="fill-muted-foreground text-xs"
+                style={{ fontSize: '0.75rem', fill: 'hsl(var(--muted-foreground))' }}
               >
                 total reps
               </text>

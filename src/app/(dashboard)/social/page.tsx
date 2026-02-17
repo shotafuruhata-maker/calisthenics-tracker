@@ -55,11 +55,11 @@ export default function SocialPage() {
   const friendIds = new Set(friendProfiles.map((f) => f.id))
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Social</h1>
-          <p className="text-gray-500">{friendProfiles.length} friends</p>
+          <h1 className="text-2xl font-bold text-foreground">Social</h1>
+          <p className="text-muted-foreground">{friendProfiles.length} friends</p>
         </div>
         <div className="flex gap-2">
           <Link href="/social/leaderboard">
@@ -92,8 +92,10 @@ export default function SocialPage() {
           {!friendProfiles.length ? (
             <Card>
               <CardContent className="py-12 text-center">
-                <Users className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">No friends yet. Search for users to connect!</p>
+                <div className="rounded-full bg-muted p-4 mx-auto mb-4 w-fit">
+                  <Users className="h-8 w-8 text-muted-foreground" />
+                </div>
+                <p className="text-muted-foreground">No friends yet. Search for users to connect!</p>
               </CardContent>
             </Card>
           ) : (
@@ -109,7 +111,7 @@ export default function SocialPage() {
                       </Avatar>
                       <div>
                         <p className="font-medium text-sm">{profile.display_name || profile.username}</p>
-                        <p className="text-xs text-gray-500">@{profile.username}</p>
+                        <p className="text-xs text-muted-foreground">@{profile.username}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -121,7 +123,7 @@ export default function SocialPage() {
 
         <TabsContent value="requests" className="mt-4">
           {!requests?.length ? (
-            <p className="text-center py-8 text-gray-500">No pending requests</p>
+            <p className="text-center py-8 text-muted-foreground">No pending requests</p>
           ) : (
             <div className="space-y-2">
               {requests.map((req) => {
@@ -137,7 +139,7 @@ export default function SocialPage() {
                         </Avatar>
                         <div>
                           <p className="font-medium text-sm">{requester.display_name || requester.username}</p>
-                          <p className="text-xs text-gray-500">@{requester.username}</p>
+                          <p className="text-xs text-muted-foreground">@{requester.username}</p>
                         </div>
                       </div>
                       <div className="flex gap-2">
@@ -158,7 +160,7 @@ export default function SocialPage() {
 
         <TabsContent value="search" className="mt-4 space-y-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search by username..."
               value={searchQuery}
@@ -181,7 +183,7 @@ export default function SocialPage() {
                         </Avatar>
                         <div>
                           <p className="font-medium text-sm">{profile.display_name || profile.username}</p>
-                          <p className="text-xs text-gray-500">@{profile.username}</p>
+                          <p className="text-xs text-muted-foreground">@{profile.username}</p>
                         </div>
                       </div>
                       {friendIds.has(profile.id) ? (
@@ -202,7 +204,7 @@ export default function SocialPage() {
                 ))}
             </div>
           ) : searchQuery.length >= 2 ? (
-            <p className="text-center py-4 text-gray-500">No users found</p>
+            <p className="text-center py-4 text-muted-foreground">No users found</p>
           ) : null}
         </TabsContent>
       </Tabs>

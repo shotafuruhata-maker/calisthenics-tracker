@@ -59,9 +59,9 @@ export function WeeklyProgressChart({ logs, weekStart, totalGoalReps = 0 }: Week
                   <stop offset="100%" stopColor="#059669" />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} className="stroke-muted" />
-              <XAxis dataKey="day" fontSize={12} className="fill-muted-foreground" />
-              <YAxis fontSize={12} className="fill-muted-foreground" />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+              <XAxis dataKey="day" fontSize={12} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+              <YAxis fontSize={12} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: 'hsl(var(--popover))',

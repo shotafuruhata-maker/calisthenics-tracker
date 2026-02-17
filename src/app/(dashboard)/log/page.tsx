@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Trash2, Plus } from 'lucide-react'
 import { toast } from 'sonner'
 import { getToday, formatShortDate } from '@/lib/utils/date'
@@ -26,6 +28,7 @@ function LogPageContent() {
   const [sets, setSets] = useState('1')
   const [notes, setNotes] = useState('')
   const [filterMuscle, setFilterMuscle] = useState('')
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
 
   const filteredExercises = exercises?.filter(
     (e) => !filterMuscle || (e as unknown as { muscle_group: { slug: string } }).muscle_group?.slug === filterMuscle
@@ -61,13 +64,15 @@ function LogPageContent() {
       toast.success('Log entry removed')
     } catch {
       toast.error('Failed to delete')
+    } finally {
+      setDeleteConfirmId(null)
     }
   }
 
   const todayTotal = todayLogs?.reduce((sum, l) => sum + l.reps * l.sets, 0) || 0
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Log Reps</h1>
         <p className="text-muted-foreground">{formatShortDate(getToday())} — {todayTotal.toLocaleString()} total reps today</p>
@@ -81,29 +86,30 @@ function LogPageContent() {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Muscle Group</Label>
-              <select
-                className="w-full border rounded-md px-3 py-2 text-sm bg-background"
-                value={filterMuscle}
-                onChange={(e) => { setFilterMuscle(e.target.value); setSelectedExercise('') }}
-              >
-                <option value="">All</option>
-                {muscleGroups?.map((mg) => (
-                  <option key={mg.id} value={mg.slug}>{mg.name}</option>
-                ))}
-              </select>
+              <Select value={filterMuscle} onValueChange={(v) => { setFilterMuscle(v === '__all__' ? '' : v); setSelectedExercise('') }}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="All" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__all__">All</SelectItem>
+                  {muscleGroups?.map((mg) => (
+                    <SelectItem key={mg.id} value={mg.slug}>{mg.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-2">
               <Label>Exercise</Label>
-              <select
-                className="w-full border rounded-md px-3 py-2 text-sm bg-background"
-                value={selectedExerciseObj?.id || ''}
-                onChange={(e) => setSelectedExercise(e.target.value)}
-              >
-                <option value="">Select...</option>
-                {filteredExercises?.map((e) => (
-                  <option key={e.id} value={e.id}>{e.name}</option>
-                ))}
-              </select>
+              <Select value={selectedExerciseObj?.id || ''} onValueChange={(v) => setSelectedExercise(v)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {filteredExercises?.map((e) => (
+                    <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
@@ -145,7 +151,7 @@ function LogPageContent() {
                 variant="outline"
                 size="sm"
                 onClick={() => setReps(String(n))}
-                className={reps === String(n) ? 'border-emerald-500 bg-emerald-50' : ''}
+                className={reps === String(n) ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950' : ''}
               >
                 {n}
               </Button>
@@ -197,7 +203,7 @@ function LogPageContent() {
                         variant="ghost"
                         size="icon"
                         className="h-7 w-7 text-muted-foreground hover:text-red-500"
-                        onClick={() => handleDelete(log.id)}
+                        onClick={() => setDeleteConfirmId(log.id)}
                       >
                         <Trash2 className="h-3 w-3" />
                       </Button>
@@ -209,6 +215,21 @@ function LogPageContent() {
           )}
         </CardContent>
       </Card>
+
+      <Dialog open={!!deleteConfirmId} onOpenChange={(open) => !open && setDeleteConfirmId(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete log entry?</DialogTitle>
+            <DialogDescription>This action cannot be undone.</DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={() => setDeleteConfirmId(null)}>Cancel</Button>
+            <Button variant="destructive" onClick={() => deleteConfirmId && handleDelete(deleteConfirmId)}>
+              Delete
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

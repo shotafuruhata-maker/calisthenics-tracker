@@ -16,20 +16,20 @@ export default function ExerciseDetailPage({ params }: { params: Promise<{ slug:
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <div className="h-8 w-48 bg-gray-100 rounded animate-pulse" />
-        <div className="h-64 bg-gray-100 rounded-lg animate-pulse" />
+        <div className="h-8 w-48 bg-muted rounded animate-pulse" />
+        <div className="h-64 bg-muted rounded-lg animate-pulse" />
       </div>
     )
   }
 
   if (!exercise) {
-    return <p className="text-center py-12 text-gray-500">Exercise not found</p>
+    return <p className="text-center py-12 text-muted-foreground">Exercise not found</p>
   }
 
   const muscleGroup = exercise.muscle_group as { name: string; slug: string } | null
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center gap-3">
         <Link href="/exercises">
           <Button variant="ghost" size="icon">
@@ -37,8 +37,8 @@ export default function ExerciseDetailPage({ params }: { params: Promise<{ slug:
           </Button>
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{exercise.name}</h1>
-          {muscleGroup && <p className="text-gray-500">{muscleGroup.name}</p>}
+          <h1 className="text-2xl font-bold text-foreground">{exercise.name}</h1>
+          {muscleGroup && <p className="text-muted-foreground">{muscleGroup.name}</p>}
         </div>
       </div>
 
@@ -54,13 +54,13 @@ export default function ExerciseDetailPage({ params }: { params: Promise<{ slug:
         <CardContent className="space-y-4">
           <div>
             <h3 className="font-semibold mb-1">Description</h3>
-            <p className="text-gray-600">{exercise.description}</p>
+            <p className="text-muted-foreground">{exercise.description}</p>
           </div>
 
           {exercise.instructions && (
             <div>
               <h3 className="font-semibold mb-1">Instructions</h3>
-              <p className="text-gray-600 whitespace-pre-line">{exercise.instructions}</p>
+              <p className="text-muted-foreground whitespace-pre-line">{exercise.instructions}</p>
             </div>
           )}
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { createClient } from '@/lib/supabase/client'
@@ -13,6 +14,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog'
 import { LogOut, Moon, Settings, Sun, User } from 'lucide-react'
 
 export function Topbar() {
@@ -20,6 +28,7 @@ export function Topbar() {
   const { profile } = useProfile()
   const supabase = createClient()
   const { theme, setTheme } = useTheme()
+  const [signOutOpen, setSignOutOpen] = useState(false)
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -79,13 +88,26 @@ export function Topbar() {
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={() => setSignOutOpen(true)}>
               <LogOut className="mr-2 h-4 w-4" />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
+      <Dialog open={signOutOpen} onOpenChange={setSignOutOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Sign out?</DialogTitle>
+            <DialogDescription>Are you sure you want to sign out of your account?</DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={() => setSignOutOpen(false)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleLogout}>Sign Out</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </header>
   )
 }

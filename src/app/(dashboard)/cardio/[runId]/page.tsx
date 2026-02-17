@@ -78,18 +78,18 @@ export default function RunDetailPage({ params }: { params: Promise<{ runId: str
   if (runLoading || wpLoading) {
     return (
       <div className="space-y-4">
-        <div className="h-8 w-48 bg-gray-100 rounded animate-pulse" />
-        <div className="h-[400px] bg-gray-100 rounded-lg animate-pulse" />
+        <div className="h-8 w-48 bg-muted rounded animate-pulse" />
+        <div className="h-[400px] bg-muted rounded-lg animate-pulse" />
       </div>
     )
   }
 
   if (!run) {
-    return <p className="text-center py-12 text-gray-500">Run not found</p>
+    return <p className="text-center py-12 text-muted-foreground">Run not found</p>
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center gap-3">
         <Link href="/cardio">
           <Button variant="ghost" size="icon">
@@ -97,8 +97,8 @@ export default function RunDetailPage({ params }: { params: Promise<{ runId: str
           </Button>
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Run Detail</h1>
-          <p className="text-gray-500">{format(new Date(run.started_at), 'MMMM d, yyyy · h:mm a')}</p>
+          <h1 className="text-2xl font-bold text-foreground">Run Detail</h1>
+          <p className="text-muted-foreground">{format(new Date(run.started_at), 'MMMM d, yyyy · h:mm a')}</p>
         </div>
         <Badge>{run.status}</Badge>
       </div>
@@ -149,20 +149,20 @@ export default function RunDetailPage({ params }: { params: Promise<{ runId: str
       <div className="grid grid-cols-3 gap-4">
         <Card>
           <CardContent className="pt-4 text-center">
-            <p className="text-xs text-gray-500 mb-1">Distance</p>
+            <p className="text-xs text-muted-foreground mb-1">Distance</p>
             <p className="text-2xl font-bold">{metersToKm(run.total_distance_m)}</p>
-            <p className="text-xs text-gray-400">km</p>
+            <p className="text-xs text-muted-foreground">km</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4 text-center">
-            <p className="text-xs text-gray-500 mb-1">Duration</p>
+            <p className="text-xs text-muted-foreground mb-1">Duration</p>
             <p className="text-2xl font-bold font-mono">{formatDuration(run.total_duration_s)}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4 text-center">
-            <p className="text-xs text-gray-500 mb-1">Avg Pace</p>
+            <p className="text-xs text-muted-foreground mb-1">Avg Pace</p>
             <p className="text-2xl font-bold">
               {run.avg_pace ? formatPace(run.avg_pace) : '--'}
             </p>

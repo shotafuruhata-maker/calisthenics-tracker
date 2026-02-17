@@ -20,14 +20,14 @@ export default function ExercisesPage() {
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Exercise Library</h1>
-        <p className="text-gray-500">Browse {exercises?.length || 0} calisthenics exercises</p>
+        <h1 className="text-2xl font-bold text-foreground">Exercise Library</h1>
+        <p className="text-muted-foreground">Browse {exercises?.length || 0} calisthenics exercises</p>
       </div>
 
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search exercises..."
           value={search}
@@ -77,7 +77,7 @@ export default function ExercisesPage() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="h-48 bg-gray-100 rounded-lg animate-pulse" />
+            <div key={i} className="h-48 bg-muted rounded-lg animate-pulse" />
           ))}
         </div>
       ) : (
@@ -86,7 +86,7 @@ export default function ExercisesPage() {
             <ExerciseCard key={exercise.id} exercise={exercise as never} />
           ))}
           {filtered?.length === 0 && (
-            <p className="col-span-full text-center py-12 text-gray-500">No exercises found</p>
+            <p className="col-span-full text-center py-12 text-muted-foreground">No exercises found</p>
           )}
         </div>
       )}

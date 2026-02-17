@@ -49,7 +49,7 @@ export default function FeedPage() {
   }, [supabase, queryClient])
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center gap-3">
         <Link href="/social">
           <Button variant="ghost" size="icon">
@@ -57,22 +57,24 @@ export default function FeedPage() {
           </Button>
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Activity Feed</h1>
-          <p className="text-gray-500">Recent activity from you and your friends</p>
+          <h1 className="text-2xl font-bold text-foreground">Activity Feed</h1>
+          <p className="text-muted-foreground">Recent activity from you and your friends</p>
         </div>
       </div>
 
       {isLoading ? (
         <div className="space-y-3">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-16 bg-gray-100 rounded-lg animate-pulse" />
+            <div key={i} className="h-16 bg-muted rounded-lg animate-pulse" />
           ))}
         </div>
       ) : !feed?.length ? (
         <Card>
           <CardContent className="py-12 text-center">
-            <Rss className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500">No activity yet. Start logging workouts and adding friends!</p>
+            <div className="rounded-full bg-muted p-4 mx-auto mb-4 w-fit">
+              <Rss className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <p className="text-muted-foreground">No activity yet. Start logging workouts and adding friends!</p>
           </CardContent>
         </Card>
       ) : (
@@ -111,11 +113,11 @@ export default function FeedPage() {
                         Target: {String(payload.target_reps)} reps/week
                       </p>
                     )}
-                    <p className="text-xs text-gray-400 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {formatDistanceToNow(new Date(item.created_at), { addSuffix: true })}
                     </p>
                   </div>
-                  <Icon className="h-4 w-4 text-gray-400 mt-1 shrink-0" />
+                  <Icon className="h-4 w-4 text-muted-foreground mt-1 shrink-0" />
                 </CardContent>
               </Card>
             )

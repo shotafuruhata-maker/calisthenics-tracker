@@ -141,8 +141,8 @@ export default function TrackPage() {
   }, [])
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold text-gray-900">
+    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <h1 className="text-2xl font-bold text-foreground">
         {store.isTracking ? 'Running...' : 'Start a Run'}
       </h1>
 
@@ -155,20 +155,20 @@ export default function TrackPage() {
       <div className="grid grid-cols-3 gap-3">
         <Card>
           <CardContent className="pt-4 text-center">
-            <p className="text-xs text-gray-500 mb-1">Distance</p>
+            <p className="text-xs text-muted-foreground mb-1">Distance</p>
             <p className="text-2xl font-bold">{metersToKm(store.totalDistance)}</p>
-            <p className="text-xs text-gray-400">km</p>
+            <p className="text-xs text-muted-foreground">km</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4 text-center">
-            <p className="text-xs text-gray-500 mb-1">Time</p>
+            <p className="text-xs text-muted-foreground mb-1">Time</p>
             <p className="text-2xl font-bold font-mono">{formatDuration(store.elapsedTime)}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4 text-center">
-            <p className="text-xs text-gray-500 mb-1">Pace</p>
+            <p className="text-xs text-muted-foreground mb-1">Pace</p>
             <p className="text-2xl font-bold">{store.currentPace > 0 ? formatPace(store.currentPace) : '--'}</p>
           </CardContent>
         </Card>
@@ -235,7 +235,7 @@ export default function TrackPage() {
       </div>
 
       {!store.isTracking && (
-        <p className="text-center text-sm text-gray-500 flex items-center justify-center gap-1">
+        <p className="text-center text-sm text-muted-foreground flex items-center justify-center gap-1">
           <MapPin className="h-3 w-3" />
           GPS will activate when you start
         </p>

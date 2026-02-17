@@ -29,9 +29,9 @@ export function getDifficultyLabel(difficulty: number): string {
 
 export function getDifficultyColor(difficulty: number): string {
   switch (difficulty) {
-    case 1: return 'bg-green-100 text-green-800'
-    case 2: return 'bg-yellow-100 text-yellow-800'
-    case 3: return 'bg-red-100 text-red-800'
-    default: return 'bg-gray-100 text-gray-800'
+    case 1: return 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300'
+    case 2: return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300'
+    case 3: return 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300'
+    default: return 'bg-muted text-muted-foreground'
   }
 }

@@ -35,11 +35,11 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
           )}
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-gray-600 line-clamp-2">{exercise.description}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2">{exercise.description}</p>
           {exercise.secondary_muscles.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-2">
               {exercise.secondary_muscles.map((m) => (
-                <span key={m} className="text-xs text-gray-400">{m}</span>
+                <span key={m} className="text-xs text-muted-foreground">{m}</span>
               ))}
             </div>
           )}

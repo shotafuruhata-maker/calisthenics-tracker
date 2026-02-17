@@ -71,27 +71,27 @@ export default function PublicProfilePage({ params }: { params: Promise<{ userna
   if (isLoading) {
     return (
       <div className="space-y-4 max-w-xl mx-auto">
-        <div className="h-8 w-32 bg-gray-100 rounded animate-pulse" />
-        <div className="h-48 bg-gray-100 rounded-lg animate-pulse" />
+        <div className="h-8 w-32 bg-muted rounded animate-pulse" />
+        <div className="h-48 bg-muted rounded-lg animate-pulse" />
       </div>
     )
   }
 
   if (!profile) {
-    return <p className="text-center py-12 text-gray-500">User not found</p>
+    return <p className="text-center py-12 text-muted-foreground">User not found</p>
   }
 
   const initials = (profile.display_name || profile.username)[0].toUpperCase()
 
   return (
-    <div className="max-w-xl mx-auto space-y-6">
+    <div className="max-w-xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center gap-3">
         <Link href="/social">
           <Button variant="ghost" size="icon">
             <ArrowLeft className="h-5 w-5" />
           </Button>
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900">@{profile.username}</h1>
+        <h1 className="text-2xl font-bold text-foreground">@{profile.username}</h1>
       </div>
 
       <Card>
@@ -105,7 +105,7 @@ export default function PublicProfilePage({ params }: { params: Promise<{ userna
               </Avatar>
               <div>
                 <CardTitle>{profile.display_name || profile.username}</CardTitle>
-                <p className="text-sm text-gray-500">@{profile.username}</p>
+                <p className="text-sm text-muted-foreground">@{profile.username}</p>
               </div>
             </div>
             {!isOwnProfile && (
@@ -126,17 +126,17 @@ export default function PublicProfilePage({ params }: { params: Promise<{ userna
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <Dumbbell className="h-5 w-5 text-gray-400 mx-auto mb-1" />
+            <div className="text-center p-4 bg-muted rounded-lg">
+              <Dumbbell className="h-5 w-5 text-muted-foreground mx-auto mb-1" />
               <p className="text-2xl font-bold">{weeklyStats?.totalReps?.toLocaleString() || 0}</p>
-              <p className="text-xs text-gray-500">Reps this week</p>
+              <p className="text-xs text-muted-foreground">Reps this week</p>
             </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
+            <div className="text-center p-4 bg-muted rounded-lg">
               <p className="text-2xl font-bold">{weeklyStats?.workouts || 0}</p>
-              <p className="text-xs text-gray-500">Log entries this week</p>
+              <p className="text-xs text-muted-foreground">Log entries this week</p>
             </div>
           </div>
-          <p className="text-xs text-gray-400 mt-3 text-center">
+          <p className="text-xs text-muted-foreground mt-3 text-center">
             Week of {formatShortDate(getWeekStart())}
           </p>
         </CardContent>

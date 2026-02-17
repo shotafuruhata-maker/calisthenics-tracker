@@ -34,11 +34,11 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted px-4">
+      <Card className="w-full max-w-md animate-in fade-in zoom-in-95 duration-500">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="h-12 w-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+            <div className="h-12 w-12 bg-emerald-100 dark:bg-emerald-950 rounded-xl flex items-center justify-center">
               <Dumbbell className="h-7 w-7 text-emerald-600" />
             </div>
           </div>
