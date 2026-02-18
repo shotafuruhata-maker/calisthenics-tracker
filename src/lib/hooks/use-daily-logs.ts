@@ -3,7 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createClient } from '@/lib/supabase/client'
 import { getToday, getWeekStart, getWeekEnd } from '@/lib/utils/date'
-import { format, subDays, parseISO } from 'date-fns'
+import { format, subDays, parseISO as parseDateISO } from 'date-fns'
 
 export function useDailyLogs(date?: string) {
   const supabase = createClient()
@@ -30,10 +30,11 @@ export function useDailyLogs(date?: string) {
 export function useWeeklyLogs(weekStart?: string) {
   const supabase = createClient()
   const week = weekStart || getWeekStart()
-  const weekEnd = getWeekEnd(new Date(week))
+  const weekEnd = getWeekEnd(parseDateISO(week))
 
   return useQuery({
     queryKey: ['weekly-logs', week],
+    staleTime: 0,
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) throw new Error('Not authenticated')

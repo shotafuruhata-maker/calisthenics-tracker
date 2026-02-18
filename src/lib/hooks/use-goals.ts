@@ -10,6 +10,7 @@ export function useWeeklyGoals(weekStart?: string) {
 
   return useQuery({
     queryKey: ['weekly-goals', week],
+    staleTime: 0,
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) throw new Error('Not authenticated')
