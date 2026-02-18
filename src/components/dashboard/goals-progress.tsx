@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
 import { Target, CheckCircle2, Plus } from 'lucide-react'
-import { RadialBarChart, RadialBar, ResponsiveContainer } from 'recharts'
+import { RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer } from 'recharts'
 import Link from 'next/link'
 
 interface Goal {
@@ -84,10 +84,12 @@ export function GoalsProgress({ goals, weeklyLogs, overallProgress }: GoalsProgr
                 endAngle={-270}
                 data={radialData}
               >
+                <PolarAngleAxis type="number" domain={[0, 100]} angleAxisId={0} tick={false} />
                 <RadialBar
                   dataKey="value"
                   cornerRadius={10}
                   background={{ fill: 'hsl(var(--muted))' }}
+                  angleAxisId={0}
                 />
                 <text
                   x="50%"

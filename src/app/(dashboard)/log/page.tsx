@@ -86,7 +86,7 @@ function LogPageContent() {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Muscle Group</Label>
-              <Select value={filterMuscle} onValueChange={(v) => { setFilterMuscle(v === '__all__' ? '' : v); setSelectedExercise('') }}>
+              <Select value={filterMuscle || '__all__'} onValueChange={(v) => { setFilterMuscle(v === '__all__' ? '' : v); setSelectedExercise('') }}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="All" />
                 </SelectTrigger>

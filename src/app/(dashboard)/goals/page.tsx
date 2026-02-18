@@ -101,7 +101,7 @@ export default function GoalsPage() {
                 </div>
                 <div className="space-y-2">
                   <Label>Exercise</Label>
-                  <Select value={selectedExercise || undefined} onValueChange={(v) => setSelectedExercise(v)}>
+                  <Select value={selectedExercise} onValueChange={(v) => setSelectedExercise(v)}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select exercise..." />
                     </SelectTrigger>
